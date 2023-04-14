@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import BarChartRace from './BarChartRace';
 
+const sortDataByValue = (data) => {
+    return data.map((weekData) => {
+        return weekData.slice().sort((a, b) => b.value - a.value);
+    });
+};
+
+
 const ParentComponent = () => {
     const [data, setData] = useState([]);
 
@@ -16,31 +23,26 @@ const ParentComponent = () => {
                     { name: 'Team D', value: 0 },
                 ],
                 [
-                    { name: 'Team A', value: 100 },
-                    { name: 'Team B', value: 200 },
-                    { name: 'Team C', value: 300 },
-                    { name: 'Team D', value: 400 },
+                    { name: 'Team A', value: 10 },
+                    { name: 'Team B', value: 20 },
+                    { name: 'Team C', value: 30 },
+                    { name: 'Team D', value: 40 },
                 ],
                 [
-                    { name: 'Team A', value: 150 },
-                    { name: 'Team B', value: 250 },
-                    { name: 'Team C', value: 350 },
-                    { name: 'Team D', value: 500 },
+                    { name: 'Team A', value: 70 },
+                    { name: 'Team B', value: 60 },
+                    { name: 'Team C', value: 50 },
+                    { name: 'Team D', value: 40 },
                 ],
                 [
-                    { name: 'Team A', value: 180 },
-                    { name: 'Team B', value: 300 },
-                    { name: 'Team D', value: 550 },
-                    { name: 'Team C', value: 800 },
-                ],
-                [
-                    { name: 'Team A', value: 250 },
-                    { name: 'Team B', value: 400 },
-                    { name: 'Team D', value: 900 },
-                    { name: 'Team C', value: 1000 },
+                    { name: 'Team A', value: 70 },
+                    { name: 'Team B', value: 60 },
+                    { name: 'Team C', value: 50 },
+                    { name: 'Team D', value: 40 },
                 ],
             ];
-            setData(sampleData);
+            const sortedData = sortDataByValue(sampleData);
+            setData(sortedData);
         };
 
         fetchData();
@@ -48,7 +50,7 @@ const ParentComponent = () => {
 
     return (
         <div className="w-full h-full">
-            <BarChartRace data={data} speed={3000} />
+            <BarChartRace data={data} speed={1000} />
         </div>
     );
 };
