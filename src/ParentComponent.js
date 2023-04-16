@@ -14,35 +14,22 @@ const ParentComponent = () => {
     useEffect(() => {
         // Fetch data from your backend or API and set the data state
         // For this example, we'll use a static dataset
+
         const fetchData = async () => {
-            const sampleData = [
-                [
-                    { name: 'Team A', value: 0 },
-                    { name: 'Team B', value: 0 },
-                    { name: 'Team C', value: 0 },
-                    { name: 'Team D', value: 0 },
-                ],
-                [
-                    { name: 'Team A', value: 10 },
-                    { name: 'Team B', value: 20 },
-                    { name: 'Team C', value: 30 },
-                    { name: 'Team D', value: 40 },
-                ],
-                [
-                    { name: 'Team A', value: 70 },
-                    { name: 'Team B', value: 60 },
-                    { name: 'Team C', value: 50 },
-                    { name: 'Team D', value: 40 },
-                ],
-                [
-                    { name: 'Team A', value: 70 },
-                    { name: 'Team B', value: 60 },
-                    { name: 'Team C', value: 50 },
-                    { name: 'Team D', value: 40 },
-                ],
-            ];
-            const sortedData = sortDataByValue(sampleData);
-            setData(sortedData);
+            try {
+              const response = await fetch('http://localhost:8080/raw/fpl/premierleague.com/league/37606/score_history');
+
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              const data = await response.json();
+              const sortedData = sortDataByValue(data['data']);
+              setData(sortedData);
+
+            } catch (error) {
+              console.error('Error fetching data:', error);
+            }
         };
 
         fetchData();
